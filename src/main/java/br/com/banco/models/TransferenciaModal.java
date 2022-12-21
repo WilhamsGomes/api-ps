@@ -2,6 +2,7 @@ package br.com.banco.models;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity(name="transferencia")
@@ -16,7 +17,7 @@ public class TransferenciaModal implements Serializable {
     private long id;
 
     @Column(nullable = false)
-    private LocalDateTime dataTransferencia;
+    private LocalDate data_transferencia;
 
     @Column(nullable = false)
     private Double valor;
@@ -38,12 +39,12 @@ public class TransferenciaModal implements Serializable {
         this.id = id;
     }
 
-    public LocalDateTime getDataTransferencia() {
-        return dataTransferencia;
+    public LocalDate getData_transferencia() {
+        return data_transferencia;
     }
 
-    public void setDataTransferencia(LocalDateTime dataTransferencia) {
-        this.dataTransferencia = dataTransferencia;
+    public void setData_transferencia(LocalDate data_transferencia) {
+        this.data_transferencia = data_transferencia;
     }
 
     public Double getValor() {

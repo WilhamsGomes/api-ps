@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -32,6 +34,30 @@ public class TransferenciaController {
         return new ResponseEntity<List<TransferenciaModal>>(transferencias, HttpStatus.OK);
     }
 
+    /*
+    //Rota para fornecer dados de acordo com a conta bancária E operador
+    @GetMapping("/contas/operadores")
+    @ResponseBody
+    public ResponseEntity<List<TransferenciaModal>> getTransferenciasPorContaEOperador(@RequestParam(name = "conta_id") Long conta_id,
+                                                                                       @RequestParam(name = "nome_operador_transacao") String nome_operador_transacao){
+        List<TransferenciaModal> transferencias = transferenciaRepository.findByContaAndOperador(conta_id, nome_operador_transacao.trim().toUpperCase());
+        return new ResponseEntity<List<TransferenciaModal>>(transferencias, HttpStatus.OK);
+    }
+    */
+
+    //Rota para fornecer dados por período de datas
+    @GetMapping("/data")
+    @ResponseBody
+    public ResponseEntity<List<TransferenciaModal>> getTransferenciasPorPeriodo(@RequestParam(name = "dataInicio")  String dataInicio,
+                                                                             @RequestParam(name = "dataFinal") String  dataFinal){
+
+        LocalDate dataDeInicio = LocalDate.parse(dataInicio, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        LocalDate dataDoFinal = LocalDate.parse(dataFinal, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+        List<TransferenciaModal> transferencias = transferenciaRepository.findByData(dataDeInicio, dataDoFinal);
+        return new ResponseEntity<List<TransferenciaModal>>(transferencias, HttpStatus.OK);
+    }
+
     //Rota para fornecer dados de acordo com o operador
     @GetMapping("/operadores")
     @ResponseBody
@@ -40,12 +66,17 @@ public class TransferenciaController {
         return new ResponseEntity<List<TransferenciaModal>>(transferencias, HttpStatus.OK);
     }
 
-    //Rota para fornecer dados de acordo com a conta bancária E operador
-    @GetMapping("/contas/operadores")
+    //Rota para fornecer dados de acordo com o período e operador
+    @GetMapping("/data/operador")
     @ResponseBody
-    public ResponseEntity<List<TransferenciaModal>> getTransferenciasPorContaEOperador(@RequestParam(name = "conta_id") Long conta_id,
-                                                                                       @RequestParam(name = "nome_operador_transacao") String nome_operador_transacao){
-        List<TransferenciaModal> transferencias = transferenciaRepository.findByContaAndOperador(conta_id, nome_operador_transacao.trim().toUpperCase());
+    public ResponseEntity<List<TransferenciaModal>> getTransferenciasPorPeriodoEOperador(@RequestParam(name = "dataInicio")  String dataInicio,
+                                                                                         @RequestParam(name = "dataFinal") String  dataFinal,
+                                                                                         @RequestParam(name = "nome_operador_transacao") String nome_operador_transacao){
+
+        LocalDate dataDeInicio = LocalDate.parse(dataInicio, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        LocalDate dataDoFinal = LocalDate.parse(dataFinal, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+        List<TransferenciaModal> transferencias = transferenciaRepository.findByDataOperador(dataDeInicio, dataDoFinal, nome_operador_transacao.trim().toUpperCase());
         return new ResponseEntity<List<TransferenciaModal>>(transferencias, HttpStatus.OK);
     }
 
