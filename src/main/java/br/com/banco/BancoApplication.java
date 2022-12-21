@@ -3,11 +3,13 @@ package br.com.banco;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication()
 public class BancoApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(BancoApplication.class, args);
+
+        SpringApplication.run(BancoApplication.class, args); /*Linha principal que roda o projeto Java Spring Boot*/
+
     }
 
 }

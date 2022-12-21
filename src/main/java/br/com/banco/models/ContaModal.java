@@ -6,7 +6,7 @@ import java.io.Serializable;
 @Entity(name="conta")
 @Table(name="conta")
 @SequenceGenerator(name = "seq_user", sequenceName = "seq_user", allocationSize = 1, initialValue = 1)
-public class UserModal implements Serializable {
+public class ContaModal implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
