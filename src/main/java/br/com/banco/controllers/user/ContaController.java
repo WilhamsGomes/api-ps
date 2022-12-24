@@ -15,6 +15,7 @@ public class ContaController {
     @Autowired /*Injeção de dependência*/
     private ContaRepository contaRepository;
 
+    @CrossOrigin
     @GetMapping(value = "/users")
     @ResponseBody /*Retorna os dados para o corpo  da resposta*/
     public ResponseEntity<List<ContaModal>> getUsers(){
@@ -22,6 +23,7 @@ public class ContaController {
         return new ResponseEntity<List<ContaModal>>(users, HttpStatus.OK); /*Retorna a lista de contas em JSON*/
     }
 
+    @CrossOrigin
     @GetMapping(value = "/userByName")
     @ResponseBody
     public ResponseEntity<List<ContaModal>> buscaPorNome (@RequestParam(name = "name") String name){

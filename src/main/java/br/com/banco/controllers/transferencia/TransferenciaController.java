@@ -18,7 +18,8 @@ public class TransferenciaController {
     @Autowired
     private TransferenciaRepository transferenciaRepository;
 
-    //Rota sem filtros
+    //End-point sem filtros (Retorna todas as transferencias, de todas as contas)
+    @CrossOrigin
     @GetMapping
     @ResponseBody
     public ResponseEntity<List<TransferenciaModal>> getTransferencias(){
@@ -26,7 +27,8 @@ public class TransferenciaController {
         return new ResponseEntity<List<TransferenciaModal>>(transferencias, HttpStatus.OK);
     }
 
-    //Rota para fornecer dados de acordo com o número da conta bancária
+    //End-point para fornecer todas as transferências, de acordo com o número da conta bancária
+    @CrossOrigin
     @GetMapping("/contas")
     @ResponseBody
     public ResponseEntity<List<TransferenciaModal>> getTransferenciasPorConta(@RequestParam(name = "conta_id") Long conta_id){
@@ -34,49 +36,57 @@ public class TransferenciaController {
         return new ResponseEntity<List<TransferenciaModal>>(transferencias, HttpStatus.OK);
     }
 
-    /*
-    //Rota para fornecer dados de acordo com a conta bancária E operador
-    @GetMapping("/contas/operadores")
+    //End-point para fornecer transferências por período de datas
+    @CrossOrigin
+    @GetMapping("/contas/periodo")
     @ResponseBody
-    public ResponseEntity<List<TransferenciaModal>> getTransferenciasPorContaEOperador(@RequestParam(name = "conta_id") Long conta_id,
-                                                                                       @RequestParam(name = "nome_operador_transacao") String nome_operador_transacao){
-        List<TransferenciaModal> transferencias = transferenciaRepository.findByContaAndOperador(conta_id, nome_operador_transacao.trim().toUpperCase());
-        return new ResponseEntity<List<TransferenciaModal>>(transferencias, HttpStatus.OK);
-    }
-    */
-
-    //Rota para fornecer dados por período de datas
-    @GetMapping("/data")
-    @ResponseBody
-    public ResponseEntity<List<TransferenciaModal>> getTransferenciasPorPeriodo(@RequestParam(name = "dataInicio")  String dataInicio,
-                                                                             @RequestParam(name = "dataFinal") String  dataFinal){
+    public ResponseEntity<List<TransferenciaModal>> getTransferenciasPorPeriodo(@RequestParam(name = "conta_id") Long conta_id,
+                                                                                @RequestParam(name = "dataInicio")  String dataInicio,
+                                                                                @RequestParam(name = "dataFinal") String  dataFinal){
 
         LocalDate dataDeInicio = LocalDate.parse(dataInicio, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         LocalDate dataDoFinal = LocalDate.parse(dataFinal, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
-        List<TransferenciaModal> transferencias = transferenciaRepository.findByData(dataDeInicio, dataDoFinal);
+        if(dataDeInicio.isAfter(dataDoFinal)){
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
+
+        List<TransferenciaModal> transferencias = transferenciaRepository.findByPeriodo(dataDeInicio, dataDoFinal, conta_id);
         return new ResponseEntity<List<TransferenciaModal>>(transferencias, HttpStatus.OK);
     }
 
-    //Rota para fornecer dados de acordo com o operador
-    @GetMapping("/operadores")
+    //End-point para fornecer dados de acordo com o operador
+    @CrossOrigin
+    @GetMapping("/contas/operadores")
     @ResponseBody
-    public ResponseEntity<List<TransferenciaModal>> getTransferenciasPorOperador(@RequestParam(name = "nome_operador_transacao") String nome_operador_transacao){
-        List<TransferenciaModal> transferencias = transferenciaRepository.findByOperador(nome_operador_transacao.trim().toUpperCase());
+    public ResponseEntity<List<TransferenciaModal>> getTransferenciasPorOperador(@RequestParam(name = "conta_id") Long conta_id,
+                                                                                 @RequestParam(name = "nome_operador_transacao") String nome_operador_transacao){
+
+        List<TransferenciaModal> transferencias = transferenciaRepository.findByOperador(nome_operador_transacao.trim().toUpperCase(), conta_id);
         return new ResponseEntity<List<TransferenciaModal>>(transferencias, HttpStatus.OK);
     }
 
-    //Rota para fornecer dados de acordo com o período e operador
-    @GetMapping("/data/operador")
+    //End-point para fornecer transferências de acordo com o período e operador
+    @CrossOrigin
+    @GetMapping("/contas/operadores/periodo")
     @ResponseBody
-    public ResponseEntity<List<TransferenciaModal>> getTransferenciasPorPeriodoEOperador(@RequestParam(name = "dataInicio")  String dataInicio,
+    public ResponseEntity<List<TransferenciaModal>> getTransferenciasPorPeriodoEOperador(@RequestParam(name = "conta_id") Long conta_id,
+                                                                                         @RequestParam(name = "dataInicio")  String dataInicio,
                                                                                          @RequestParam(name = "dataFinal") String  dataFinal,
                                                                                          @RequestParam(name = "nome_operador_transacao") String nome_operador_transacao){
 
         LocalDate dataDeInicio = LocalDate.parse(dataInicio, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         LocalDate dataDoFinal = LocalDate.parse(dataFinal, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
-        List<TransferenciaModal> transferencias = transferenciaRepository.findByDataOperador(dataDeInicio, dataDoFinal, nome_operador_transacao.trim().toUpperCase());
+        if(dataDeInicio.isAfter(dataDoFinal)){
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
+
+        List<TransferenciaModal> transferencias = transferenciaRepository.findByDataOperador(   dataDeInicio,
+                                                                                                dataDoFinal,
+                                                                                                nome_operador_transacao.trim().toUpperCase(),
+                                                                                                conta_id
+                                                                                            );
         return new ResponseEntity<List<TransferenciaModal>>(transferencias, HttpStatus.OK);
     }
 
