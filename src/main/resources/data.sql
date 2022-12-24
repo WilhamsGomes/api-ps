@@ -28,3 +28,15 @@ INSERT INTO transferencia (id,data_transferencia, valor, tipo, nome_operador_tra
 INSERT INTO transferencia (id,data_transferencia, valor, tipo, nome_operador_transacao, conta_id) VALUES (4,'2019-08-07 08:12:45+03',-530.50,'SAQUE', null,2);
 INSERT INTO transferencia (id,data_transferencia, valor, tipo, nome_operador_transacao, conta_id) VALUES (5,'2020-06-08 10:15:01+03',3241.23,'TRANSFERENCIA', 'Beltrano',1);
 INSERT INTO transferencia (id,data_transferencia, valor, tipo, nome_operador_transacao, conta_id) VALUES (6,'2021-04-01 12:12:04+03',25173.09,'TRANSFERENCIA', 'Ronnyscley',2);
+INSERT INTO transferencia (data_transferencia, valor, tipo, nome_operador_transacao, conta_id) VALUES ('2022-01-01 12:00:00+03',895.46,'DEPOSITO', null, 1);
+INSERT INTO transferencia (data_transferencia, valor, tipo, nome_operador_transacao, conta_id) VALUES ('2021-02-03 09:53:27+03',112.24,'DEPOSITO', null,2);
+INSERT INTO transferencia (data_transferencia, valor, tipo, nome_operador_transacao, conta_id) VALUES ('2020-05-04 08:12:45+03',-5000.50,'SAQUE', null,3);
+INSERT INTO transferencia (data_transferencia, valor, tipo, nome_operador_transacao, conta_id) VALUES ('2022-08-07 08:12:45+03',530.50,'SAQUE', null,3);
+INSERT INTO transferencia (data_transferencia, valor, tipo, nome_operador_transacao, conta_id) VALUES ('2022-06-08 10:15:01+03',321.23,'TRANSFERENCIA', 'Wilhams',1);
+INSERT INTO transferencia (data_transferencia, valor, tipo, nome_operador_transacao, conta_id) VALUES ('2019-04-01 12:12:04+03',173.09,'TRANSFERENCIA', 'SA',2);
+INSERT INTO transferencia (data_transferencia, valor, tipo, nome_operador_transacao, conta_id) VALUES ('2022-01-01 12:00:00+03',1895.46,'DEPOSITO', null, 1);
+INSERT INTO transferencia (data_transferencia, valor, tipo, nome_operador_transacao, conta_id) VALUES ('2021-02-03 09:53:27+03',22.24,'DEPOSITO', null,1);
+INSERT INTO transferencia (data_transferencia, valor, tipo, nome_operador_transacao, conta_id) VALUES ('2020-05-04 08:12:45+03',130.50,'SAQUE', null,1);
+INSERT INTO transferencia (data_transferencia, valor, tipo, nome_operador_transacao, conta_id) VALUES ('2022-08-07 08:12:45+03',30.50,'SAQUE', null,3);
+INSERT INTO transferencia (data_transferencia, valor, tipo, nome_operador_transacao, conta_id) VALUES ('2022-06-08 10:15:01+03',1321.23,'TRANSFERENCIA', 'Hugo',1);
+INSERT INTO transferencia (data_transferencia, valor, tipo, nome_operador_transacao, conta_id) VALUES ('2019-04-01 12:12:04+03',1073.09,'TRANSFERENCIA', 'Bill',2);
